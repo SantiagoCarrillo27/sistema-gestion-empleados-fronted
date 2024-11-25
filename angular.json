@@ -16,6 +16,7 @@
             "outputPath": "dist/sistema-gestion-empleados",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": ["sweetalert2"],
             "polyfills": [
               "zone.js"
             ],
@@ -25,9 +26,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {

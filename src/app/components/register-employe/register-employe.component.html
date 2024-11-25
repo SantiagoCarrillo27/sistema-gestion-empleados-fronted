@@ -1,0 +1,10 @@
+<app-empleado-formulario
+  [formGroup]="employeForm"
+  titulo="Registrar Empleado"
+  botonTexto="Guardar"
+  [esRegistro]="true"
+  [paises]="paises"
+  [estados]="estados"
+  (onSubmit)="registrarEmpleado()"
+  (onCancel)="listaEmpleados()">
+</app-empleado-formulario>

@@ -1,0 +1,33 @@
+<h2 class="text-center mb-4">Listado de empleados</h2>
+<div class="container-xl">
+  <table class="table table-hover">
+    <thead class="table-success">
+      <tr>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Apellido</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empleado of empleados">
+        <td class="text-center">{{empleado.nombre}}</td>
+        <td class="text-center">{{empleado.apellido}}</td>
+        <td class="text-center">{{empleado.email}}</td>
+        <td class="text-center d-flex justify-content-center gap-2">
+
+          <a class="btn btn-warning fw-bold btn-sm d-flex align-items-center" (click)="updateEmploye(empleado.id)">
+            <span class="material-symbols-outlined">edit</span>Editar</a>
+
+          <a class="btn btn-info fw-bold btn-sm d-flex align-items-center" d-flex align-items-center (click)="detailsViewEmploye(empleado.id)">
+            <span class="material-symbols-outlined">person_search</span>Ver detalles</a>
+
+          <a class="btn btn-danger fw-bold btn-sm d-flex align-items-center" d-flex align-items-center
+            (click)="deleteEmploye(empleado.id)">
+            <span class="material-symbols-outlined">person_remove</span> Eliminar</a>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
