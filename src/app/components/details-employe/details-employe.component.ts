@@ -19,6 +19,18 @@ export class DetailsEmployeComponent implements OnInit {
       nombre: '',
       apellido: '',
       email: '',
+      pais:{
+        id:0,
+        nombre:''
+      },
+      estado:{
+        id:0,
+        nombre:'',
+        pais:{
+          id:0,
+          nombre:''
+        }
+      }
 
     };
   }
@@ -29,7 +41,7 @@ export class DetailsEmployeComponent implements OnInit {
       next: (data) => {
         this.empleado = data;
         Swal.fire({
-          title: `Detalles empleado/a: ${this.empleado.nombre}`,
+          title: `Detalles empleado/a: ${this.empleado.nombre} ${this.empleado.apellido}`,
           confirmButtonText:'Aceptar'
         });
       },

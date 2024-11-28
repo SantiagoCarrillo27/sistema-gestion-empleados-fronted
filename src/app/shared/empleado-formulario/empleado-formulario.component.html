@@ -55,7 +55,7 @@
 
     <div class="mb-2">
       <label class="form-label fw-bold" for="pais">Pais<span class="text-danger">*</span>:</label>
-      <select class="form-select" aria-label="Default select example" formControlName="paises">
+      <select class="form-select" aria-label="Default select example" formControlName="pais">
         <option value="" disabled selected >Elige un país</option>
         <option [ngValue]="pais" *ngFor="let pais of paises">{{pais.nombre}}</option>
       </select>
@@ -63,7 +63,7 @@
 
     <div>
       <label class="form-label fw-bold" for="estado">Estado<span class="text-danger">*</span>:</label>
-      <select class="form-select" aria-label="Default select example" formControlName="estados" >
+      <select class="form-select" aria-label="Default select example" formControlName="estado">
         <option disabled selected value="">Elige un Estado, provincia o departamento</option>
         <option [ngValue]="estado" *ngFor="let estado of estados">{{estado.nombre}}</option>
       </select>

@@ -22,18 +22,20 @@ export class EmpleadoFormularioComponent {
 
   @Output() onSubmit = new EventEmitter<void>();
   @Output() onCancel = new EventEmitter<void>();
-  @Output() paisChange = new EventEmitter<number>();
 
 
-  CountryChange(event: Event): void {
-    const countryId = parseInt((event.target as HTMLSelectElement).value, 10);
-    console.log('Pais seleccionado:', countryId); // Verifica que sea 15
-    if (countryId) {
-      this.paisChange.emit(countryId);
-    }
+  ngOnInit(): void {
+
+    this.formGroup.get('estado')?.disable();
+    this.formGroup.get('pais')?.valueChanges.subscribe((value) => {
+      if (value && value.id !== 0) {
+        this.formGroup.get('estado')?.enable();
+      } else {
+        this.formGroup.get('estado')?.disable();
+        this.formGroup.get('estado')?.setValue(null);
+      }
+    });
   }
-
-
 
 
 }

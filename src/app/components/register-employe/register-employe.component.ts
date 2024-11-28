@@ -16,58 +16,71 @@ import { EstadosService } from '../../services/estados.service';
 export class RegisterEmployeComponent implements OnInit {
   employeForm: FormGroup;
   paises: Pais[] = [];
-  estados:Estado[] = [];
-  id:number = 0;
+  estados: Estado[] = [];
+  id: number = 0;
 
   constructor(
     private fb: FormBuilder,
     private employeService: EmployesService,
     private router: Router,
-    private paisService:PaisesService,
-    private estadoService:EstadosService
+    private paisService: PaisesService,
+    private estadoService: EstadosService
   ) {
     this.employeForm = this.fb.group({
-      nombre: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(13)]],
-      apellido: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(13)]],
+      nombre: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(13),
+        ],
+      ],
+      apellido: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(13),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
-      paises:['', Validators.required],
-      estados:['', Validators.required]
+      pais: ['', Validators.required],
+      estado: ['', Validators.required],
     });
   }
 
+
   ngOnInit(): void {
-    this.employeForm.get('email')?.valueChanges.subscribe(value => {
+    this.employeForm.get('email')?.valueChanges.subscribe((value) => {
       const emailLowerCase = value ? value.toLowerCase() : '';
-      this.employeForm.get('email')?.setValue(emailLowerCase, { emitEvent: false });
+      this.employeForm
+        .get('email')
+        ?.setValue(emailLowerCase, { emitEvent: false });
     });
-    this.getAllCountries()
 
 
-  this.employeForm.get('paises')?.valueChanges.subscribe(value => {
-    this.estadoService.getAllStatesByIdCountry(value.id).subscribe({
-      next: (dato) =>{
-        this.estados = dato;
-      },
-      error: (err) =>{
-        console.error("Ocurrió un error", err);
+    this.getAllCountries();
 
+    //CAMBIAR DINAMICAMENTE LOS ESTADOS, CUANDO SE ELIGE UN PAÍS
+    this.employeForm.get('pais')?.valueChanges.subscribe((value) => {
+      if (value != null && value.id !== 0) {
+        this.estadoService.getAllStatesByIdCountry(value.id).subscribe({
+          next: (dato) => {
+            this.estados = dato;
+          },
+          error: (err) => {
+            console.error('Ocurrió un error', err);
+          },
+        });
       }
-    })
-  });
-
+    });
   }
 
   registrarEmpleado() {
-
     if (this.employeForm.valid) {
       const formValueEmploye = { ...this.employeForm.value };
 
-
       formValueEmploye.email = formValueEmploye.email.toLowerCase();
-      formValueEmploye.paises = formValueEmploye.paises.id;
-      formValueEmploye.estados = formValueEmploye.estados.id;
-
-      console.log(formValueEmploye);
 
       this.employeService.registerEmploye(formValueEmploye).subscribe({
         next: (dato) => {
@@ -98,45 +111,20 @@ export class RegisterEmployeComponent implements OnInit {
         confirmButtonText: 'Aceptar',
       });
     }
-
   }
 
-  listaEmpleados(){
-    this.router.navigate(['empleados'])
+  listaEmpleados() {
+    this.router.navigate(['empleados']);
   }
 
-  getAllCountries(){
+  getAllCountries() {
     this.paisService.getAllCountries().subscribe({
-      next : (dato)=>{
-        this.paises = dato
+      next: (dato) => {
+        this.paises = dato;
       },
-      error: (err) =>{
-        console.error("Ocurrió un error", err)
-      }
-    })
+      error: (err) => {
+        console.error('Ocurrió un error', err);
+      },
+    });
   }
-
-  // getAllStatesByIdCountries(idPais: number) {
-  //   console.log('Recibido idPais:', idPais); // Verifica el valor recibido
-  //   if (!idPais) {
-  //     console.error("El idPais es undefined o null");
-  //     return;
-  //   }
-
-  //   console.log('Buscando estados para el país con id:', idPais);
-
-  //   this.estadoService.getAllStatesByIdCountry(idPais).subscribe({
-  //     next: (dato) => {
-  //       this.estados = dato;
-  //       console.log('Estados para el país:', this.estados);
-  //     },
-  //     error: (err) => {
-  //       console.error("Algo ha fallado al obtener los estados", err);
-  //     }
-  //   });
-  // }
-
-
-
-
 }
